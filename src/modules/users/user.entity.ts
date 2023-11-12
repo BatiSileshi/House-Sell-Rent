@@ -1,28 +1,37 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn } from "typeorm";
-import { House } from "../houses/house.entity";
-import { Profile } from "../profiles/profiles.entity";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Houses } from "../houses/house.entity";
+import { Profiles } from "../profiles/profiles.entity";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Entity()
-export class User {
+export class Users {
     @PrimaryGeneratedColumn()
+    @ApiProperty()
     id: number
     
     @Column()
+    @ApiProperty()
     Phone_number : string;
 
     @Column()
+    @ApiProperty()
     password: string;
 
-    // @Column()
-    // created:
+    @OneToMany(() => Houses, (house) => house.owner)
+    @ApiProperty()
+    houses: Houses[]
 
-    // @Column()
-    // updated:
-
-    @OneToMany(() => House, (house) => house.owner)
-    houses: House[]
-
-    @OneToOne(() => Profile)
+    @OneToOne(() => Profiles)
+    @ApiProperty()
     @JoinColumn()
-    profile: Profile
+    profile: Profiles
+
+    @CreateDateColumn()
+    @ApiProperty()
+    created_at: Date;
+
+    @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
+    @ApiProperty()
+    updated_at: Date; 
+
 }

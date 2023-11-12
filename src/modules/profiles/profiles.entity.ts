@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { User } from "../users/user.entity";
+import { Users } from "../users/user.entity";
 
 @Entity()
-export class Profile{
+export class Profiles{
     @PrimaryGeneratedColumn()
     @ApiProperty()
     id: number;
@@ -24,14 +24,14 @@ export class Profile{
     @ApiProperty()
     avatar: string;
 
-    // @Column()
-    // @ApiProperty()
-    // created: 
+    @CreateDateColumn()
+    @ApiProperty()
+    created_at: Date;
 
-    // @Column()
-    // @ApiProperty()
-    // created: 
+    @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
+    @ApiProperty()
+    updated_at: Date; 
 
-    @OneToOne(() => User, (user)=> user.profile, {onDelete: 'CASCADE'})
-    user: User
+    @OneToOne(() => Users, (user)=> user.profile, {onDelete: 'CASCADE'})
+    user: Users
 }

@@ -1,10 +1,14 @@
-import { Column, PrimaryGeneratedColumn, Entity, ManyToOne } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, 
+    CreateDateColumn, UpdateDateColumn, 
+    OneToMany, OneToOne, JoinColumn } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { User } from "../users/user.entity";
-
+import { Users } from "../users/user.entity";
+import { Features } from "../features/features.entity";
+import { Locations } from "../locations/locations.entity";
+import { Pictures } from "../pictures/pictures.entity";
 
 @Entity()
-export class House {
+export class Houses {
     @PrimaryGeneratedColumn()
     @ApiProperty()
     id: number;
@@ -29,17 +33,27 @@ export class House {
     @ApiProperty()
     status: string;
 
-    @ManyToOne(() => User, (owner) => owner.houses, {onDelete: 'SET NULL', nullable: true})
-    owner: User
+    @OneToMany(() => Features, (feature) => feature.house)
+    @ApiProperty()
+    features: Features[]
 
-    //location
+    @OneToMany(() => Pictures, (picture) => picture.house)
+    @ApiProperty()
+    pictures: Pictures[]
 
-    // @Column()
-    // @ApiProperty()
-    // created: Date;
+    @ManyToOne(() => Users, (owner) => owner.houses, {onDelete: 'SET NULL', nullable: true})
+    owner: Users
 
-    // @Column()
-    // @ApiProperty()
-    // updated: Date;
+    @OneToOne(() => Locations)
+    @ApiProperty()
+    @JoinColumn()
+    location: Locations
 
+    @CreateDateColumn()
+    @ApiProperty()
+    created_at: Date;
+
+    @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
+    @ApiProperty()
+    updated_at: Date; 
 }
