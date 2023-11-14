@@ -59,4 +59,22 @@ export class UsersService {
         const updatedUser = await this.repo.save(user);
         return updatedUser;
     }
+
+
+    // async updatePhoneNumber(id: number, phone_number: string):Promise<Users>{
+    //     const user = await this.findOne(id);
+    //     if(!user){
+    //         throw new NotFoundException('User not Found');
+    //     }
+
+    //     const userProfile = user.profile;
+    //     Object.assign(user, phone_number);
+    //     Object.assign(userProfile.phone_number, phone_number);
+
+    //     const updatedUser = await this.repo.save(user);
+    //     // const updatedProfile = await this.profileRepo.save(userProfile);
+
+    //     return updatedUser;
+
+    // }
 }
