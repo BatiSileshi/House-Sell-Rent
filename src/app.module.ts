@@ -14,6 +14,7 @@ import { PicturesModule } from './modules/pictures/pictures.module';
 import { Features } from './modules/features/features.entity';
 import { Locations } from './modules/locations/locations.entity';
 import { Pictures } from './modules/pictures/pictures.entity';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { Pictures } from './modules/pictures/pictures.entity';
     ProfilesModule,
     FeaturesModule,
     LocationsModule,
-    PicturesModule
+    PicturesModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

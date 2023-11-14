@@ -2,10 +2,10 @@ import { Column, PrimaryGeneratedColumn, Entity, ManyToOne,
     CreateDateColumn, UpdateDateColumn, 
     OneToMany, OneToOne, JoinColumn } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Users } from "../users/user.entity";
 import { Features } from "../features/features.entity";
 import { Locations } from "../locations/locations.entity";
 import { Pictures } from "../pictures/pictures.entity";
+import { Profiles } from "../profiles/profiles.entity";
 
 @Entity()
 export class Houses {
@@ -41,8 +41,8 @@ export class Houses {
     @ApiProperty()
     pictures: Pictures[]
 
-    @ManyToOne(() => Users, (owner) => owner.houses, {onDelete: 'SET NULL', nullable: true})
-    owner: Users
+    @ManyToOne(() => Profiles, (owner) => owner.houses, {onDelete: 'SET NULL', nullable: true})
+    owner: Profiles
 
     @OneToOne(() => Locations)
     @ApiProperty()

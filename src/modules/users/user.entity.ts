@@ -11,15 +11,13 @@ export class Users {
     
     @Column()
     @ApiProperty()
-    Phone_number : string;
+    phone_number : string;
+
 
     @Column()
     @ApiProperty()
     password: string;
 
-    @OneToMany(() => Houses, (house) => house.owner)
-    @ApiProperty()
-    houses: Houses[]
 
     @OneToOne(() => Profiles)
     @ApiProperty()
@@ -27,7 +25,7 @@ export class Users {
     profile: Profiles
 
     @CreateDateColumn()
-    @ApiProperty()
+    @ApiProperty() 
     created_at: Date;
 
     @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
