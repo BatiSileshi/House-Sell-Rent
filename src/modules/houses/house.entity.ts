@@ -29,7 +29,7 @@ export class Houses {
     @ApiProperty()
     description: string;
 
-    @Column()
+    @Column({default: 'listed'})
     @ApiProperty()
     status: string;
 
@@ -40,9 +40,10 @@ export class Houses {
     @OneToMany(() => Pictures, (picture) => picture.house)
     @ApiProperty()
     pictures: Pictures[]
-
-    @ManyToOne(() => Profiles, (owner) => owner.houses, {onDelete: 'SET NULL', nullable: true})
-    owner: Profiles
+ 
+    @ApiProperty()
+    @ManyToOne(() => Profiles, (owner) => owner.houses)
+    owner: Profiles;
 
     @OneToOne(() => Locations)
     @ApiProperty()

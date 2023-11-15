@@ -1,5 +1,5 @@
 import { Controller, Request, 
-    UseGuards, Get, Patch, Body } from '@nestjs/common';
+    UseGuards, Get, Patch, Body, Param, NotFoundException } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guards';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UsersService } from '../users/users.service';
@@ -24,6 +24,19 @@ export class ProfilesController {
         //req.user.sub === current user id
         return this.profilesService.findOneByUserId(req.user.sub)
     } 
+
+    @Get('/:profileId/profile')
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiOperation({ summary: 'Get user profile with provided profileId'})
+    async getUserProfile(@Param('profileId') profileId: string){
+        const profile = await this.profilesService.findOne(parseInt(profileId));
+
+        if(!profile){
+            throw new NotFoundException('Profile not found.')
+        }
+        return profile;
+    }
 
     @Patch('/profile/update')
     @ApiBearerAuth()

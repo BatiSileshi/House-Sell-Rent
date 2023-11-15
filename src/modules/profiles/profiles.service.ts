@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Profiles } from './profiles.entity';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { UpdatePhoneNumberDto } from './dtos/update-phone-number.dto';
 import { UpdateProfileDto } from './dtos/update-profile.dto';
 
@@ -12,6 +12,18 @@ export class ProfilesService {
         const profile = this.repo.create(profileData)
         return this.repo.save(profile);
     }
+
+    
+    async findOne(id: number){
+      if(!id){
+        return null;
+      }
+      const options: FindOneOptions<Profiles>={
+        where: { id },
+      };
+      return this.repo.findOne(options);
+    }
+
 
     async findOneByUserId(userId: number): Promise<Profiles> {
         const profile = await this.repo.findOne({ where: { user: { id: userId } } });
