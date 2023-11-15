@@ -14,6 +14,7 @@ import { Serialize } from 'src/interceptors/serializer.interceptor';
 import { HouseDto } from './dtos/house.dto';
 import { Profiles } from '../profiles/profiles.entity';
 import { UpdateHouseDto } from './dtos/update-house.dto';
+import { HouseGuard } from 'src/guards/house.guards';
 
 @ApiTags('houses')
 @Controller('houses')
@@ -77,7 +78,7 @@ export class HousesController {
     @ApiBearerAuth()
     @ApiOperation({summary: "Updating house", description: "Only owner can update."})
     @Serialize(HouseDto)
-    // @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, HouseGuard)
     async updateHouse(@Param('id') id: string, @Body() updateHouseDto: UpdateHouseDto){
         const updatedHouse = await this.housesService.update(parseInt(id), updateHouseDto);
         return updatedHouse;
@@ -87,6 +88,7 @@ export class HousesController {
     @Delete(':id/delete')
     @ApiBearerAuth()
     @Serialize(HouseDto)
+    @UseGuards(AuthGuard, HouseGuard)
     @ApiOperation({summary: "Deleting house", description: "Only owner can delete."})
     async removeHouse(@Param('id') id: string){
         return await this.housesService.remove(parseInt(id));
