@@ -1,11 +1,13 @@
 import { Column, PrimaryGeneratedColumn, Entity, ManyToOne, 
     CreateDateColumn, UpdateDateColumn, 
-    OneToMany, OneToOne, JoinColumn } from "typeorm";
+    OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Features } from "../features/features.entity";
 import { Locations } from "../locations/locations.entity";
 import { Pictures } from "../pictures/pictures.entity";
 import { Profiles } from "../profiles/profiles.entity";
+import { Categories } from "../categories/categories.entity";
+
 
 @Entity()
 export class Houses {
@@ -57,4 +59,8 @@ export class Houses {
     @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
     @ApiProperty()
     updated_at: Date; 
+
+    @ManyToMany(() => Categories)
+    @JoinTable()
+    categories: Categories[]  
 }
