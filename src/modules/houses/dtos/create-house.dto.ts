@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsNotEmpty } from "class-validator";
+import { IsString, IsNumber, IsNotEmpty, IsObject } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateHouseDto{
@@ -20,4 +20,9 @@ export class CreateHouseDto{
     @ApiProperty()
     @IsString()
     description: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @IsNumber()
+    category: number;
 }

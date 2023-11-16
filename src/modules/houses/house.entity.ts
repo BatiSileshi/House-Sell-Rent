@@ -60,7 +60,8 @@ export class Houses {
     @ApiProperty()
     updated_at: Date; 
 
-    @ManyToMany(() => Categories)
-    @JoinTable()
-    categories: Categories[]  
+    
+    @ManyToOne(() => Categories, (category) => category.houses)
+    @ApiProperty()
+    category: Categories 
 }

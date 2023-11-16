@@ -10,11 +10,13 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from 'src/guards/auth.guards';
 import { HousesService } from '../houses/houses.service';
 import { Houses } from '../houses/house.entity';
+import { Categories } from '../categories/categories.entity';
+import { CategoriesService } from '../categories/categories.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Profiles, Users, Houses]),
+  imports: [TypeOrmModule.forFeature([Profiles, Users, Houses, Categories]),
 ],
-  providers: [ProfilesService, AuthService, UsersService, JwtService, AuthGuard, HousesService],
+  providers: [ProfilesService, AuthService, UsersService, JwtService, AuthGuard, HousesService, CategoriesService],
   controllers: [ProfilesController]
 })
 export class ProfilesModule {}

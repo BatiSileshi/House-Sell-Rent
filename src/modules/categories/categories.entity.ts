@@ -1,14 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
+import { Houses } from "../houses/house.entity";
 
 @Entity()
-export class Categories{
+export class Categories{  
     @PrimaryGeneratedColumn()
     @ApiProperty()
     id: number;
 
     @Column()
-    @ApiProperty()
+    @ApiProperty()   
     category: string;
 
     @CreateDateColumn()
@@ -18,4 +19,8 @@ export class Categories{
     @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
     @ApiProperty()
     updated_at: Date; 
+
+    @OneToMany(() => Houses, (house) => house.category)
+    @ApiProperty()
+    houses: Houses[]
 }

@@ -85,7 +85,7 @@ export class HousesController {
     }
     
     //deleting house
-    @Delete(':id/delete')
+    @Delete(':id/delete') 
     @ApiBearerAuth()
     @Serialize(HouseDto)
     @UseGuards(AuthGuard, HouseGuard)

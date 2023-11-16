@@ -4,18 +4,32 @@ import { Houses } from './house.entity';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { CreateHouseDto } from './dtos/create-house.dto';
 import { Profiles } from '../profiles/profiles.entity';
+import { Categories } from '../categories/categories.entity';
+import { CategoriesService } from '../categories/categories.service';
 
 @Injectable()
 export class HousesService {
     constructor(
         @InjectRepository(Houses)
-        private repo: Repository<Houses>
+        private repo: Repository<Houses>, 
+        private categoriesService: CategoriesService,
     ){}
 
     //create house
-    create(createHouseDto: CreateHouseDto, owner: Profiles){
-        const house = this.repo.create(createHouseDto);
-        house.owner = owner;
+    async create(createHouseDto: CreateHouseDto, owner: Profiles){
+        const {category, ...houseData} = createHouseDto;
+        const selectedCategory = await this.categoriesService.findOne(category);
+
+        if (!selectedCategory) {
+            throw new NotFoundException('Category not found.');
+          }
+
+        const house = this.repo.create({
+            ...houseData,
+            owner,
+            category: selectedCategory,
+        });
+
         return this.repo.save(house);
     }
 
@@ -60,7 +74,7 @@ export class HousesService {
             throw new NotFoundException('House not found.')
         }
         return houses;
-    }
+    } 
 
     // get user's houses
     async findHouseByUser(owner: Profiles, options?: FindManyOptions<Houses>){
