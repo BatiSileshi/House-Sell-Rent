@@ -30,4 +30,12 @@ export class HouseDto{
     @Expose()
     owner: number;
 
+    @Transform(({ obj }) => obj.feature ? obj.feature.id : null)
+    @Expose()
+    feature: number;
+
+    @Transform(({ obj }) => obj.location ? obj.location.id : null)
+    @Expose()
+    location: number;
+
 }

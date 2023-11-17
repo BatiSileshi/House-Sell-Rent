@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Houses } from './house.entity';
-import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
+import { Feature, FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { CreateHouseDto } from './dtos/create-house.dto';
 import { Profiles } from '../profiles/profiles.entity';
 import { Categories } from '../categories/categories.entity';
 import { CategoriesService } from '../categories/categories.service';
+import { Features } from '../features/features.entity';
 
 @Injectable()
 export class HousesService {
@@ -40,7 +41,7 @@ export class HousesService {
         }
         const options: FindOneOptions<Houses>={
             where: {id},
-            relations: ['owner', 'location'],
+            relations: ['owner', 'location', 'feature'],
         };
 
         return await this.repo.findOne(options);
@@ -68,7 +69,7 @@ export class HousesService {
 
     // get all houses in the db
     async findAll(options?: FindManyOptions<Houses>){
-        const houses = await this.repo.find({ ...options, relations: ['owner']});
+        const houses = await this.repo.find({ ...options, relations: ['owner', 'location', 'feature']});
 
         if (!houses || houses.length === 0){
             throw new NotFoundException('House not found.')
@@ -85,4 +86,17 @@ export class HousesService {
         }
         return houses;
     }
+
+
+    async updateFeature(id: number, feature: Features): Promise<Houses> {
+        const house = await this.findOne(id);
+    
+        if (!house) {
+          throw new NotFoundException('House not found.');
+        }
+    
+        house.feature = feature;
+
+        return this.repo.save(house);
+      }
 }

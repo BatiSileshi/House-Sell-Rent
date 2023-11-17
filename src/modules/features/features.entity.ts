@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Houses } from "../houses/house.entity";
 
@@ -41,14 +41,14 @@ export class Features{
     utility: string;
 
     @Column()
-    @ApiProperty()
+    @ApiProperty() 
     built_in: Date;
 
     @Column()
     @ApiProperty()
     special_thing: string;
 
-    @ManyToOne(() => Houses, (house) => house.features, {onDelete: 'SET NULL', nullable: true})
+    @OneToOne(() => Houses, (house)=> house.feature, {onDelete: 'SET NULL', nullable: true})
     house: Houses
 
     @CreateDateColumn()

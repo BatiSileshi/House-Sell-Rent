@@ -7,6 +7,7 @@ import { Locations } from "../locations/locations.entity";
 import { Pictures } from "../pictures/pictures.entity";
 import { Profiles } from "../profiles/profiles.entity";
 import { Categories } from "../categories/categories.entity";
+import { LocationsModule } from "../locations/locations.module";
 
 
 @Entity()
@@ -15,19 +16,19 @@ export class Houses {
     @ApiProperty()
     id: number;
 
-    @Column()
+    @Column({ default: 0 })
     @ApiProperty()
     price: number;
 
-    @Column()
+    @Column({ nullable: true})
     @ApiProperty()
     length: number;
 
-    @Column()
+    @Column({ nullable: true})
     @ApiProperty()
     width: number;
 
-    @Column()
+    @Column({ nullable: true})
     @ApiProperty()
     description: string;
 
@@ -35,9 +36,6 @@ export class Houses {
     @ApiProperty()
     status: string;
 
-    @OneToMany(() => Features, (feature) => feature.house)
-    @ApiProperty()
-    features: Features[]
 
     @OneToMany(() => Pictures, (picture) => picture.house)
     @ApiProperty()
@@ -47,10 +45,18 @@ export class Houses {
     @ManyToOne(() => Profiles, (owner) => owner.houses)
     owner: Profiles;
 
-    @OneToOne(() => Locations)
-    @ApiProperty()
+    // @OneToOne(() => Locations)
+    // @ApiProperty()
+    // @JoinColumn()
+    // location: Locations
+    @OneToOne(() => Locations, (location) => location.house, { cascade: true, nullable: true})
     @JoinColumn()
     location: Locations
+
+
+    @OneToOne(() => Features, (feature) => feature.house, { onDelete: 'SET NULL' , nullable:true})
+    @JoinColumn()
+    feature: Features;
 
     @CreateDateColumn()
     @ApiProperty()
