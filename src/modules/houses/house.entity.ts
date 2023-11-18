@@ -64,10 +64,6 @@ export class Houses {
     feature: Features;
 
 
-    // @OneToOne(() => Locations, { onDelete: 'SET NULL', nullable: true })
-    // @JoinColumn()
-    // location: Locations;
-
     
     @ManyToOne(() => Categories, (category) => category.houses)
     @ApiProperty()
