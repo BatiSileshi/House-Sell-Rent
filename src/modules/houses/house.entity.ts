@@ -35,7 +35,10 @@ export class Houses {
     @ApiProperty()
     status: string;
 
-
+    @Column({default: false})
+    @ApiProperty()
+    is_paid: boolean;
+    
     @OneToMany(() => Pictures, (picture) => picture.house)
     @ApiProperty()
     pictures: Pictures[]

@@ -16,13 +16,16 @@ import { Pictures } from './modules/pictures/pictures.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { Categories } from './modules/categories/categories.entity';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { Payments } from './modules/payments/payments.entity';
+import { PaymentMethods } from './modules/payments/methods.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [Users, Profiles, Houses, Features, Locations, Pictures, Categories],
+      entities: [Users, Profiles, Houses, Features, Locations, Pictures, Categories, PaymentMethods, Payments],
       synchronize: true,
     }),
     
@@ -32,7 +35,8 @@ import { Categories } from './modules/categories/categories.entity';
     ProfilesModule,
     PicturesModule,
     AuthModule,
-    CategoriesModule
+    CategoriesModule,
+    PaymentsModule
   ],
   controllers: [AppController],
   providers: [AppService],
