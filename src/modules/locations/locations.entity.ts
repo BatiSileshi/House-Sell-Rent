@@ -28,6 +28,9 @@ export class Locations {
     @ApiProperty()
     community: string;
 
-    @OneToOne(() => Houses, (house)=> house.feature, {onDelete: 'SET NULL', nullable: true})
-    house: Houses
+    // @OneToOne(() => Houses, (house)=> house.location, {onDelete: 'SET NULL', nullable: true})
+    // house: Houses
+
+    @OneToOne(() => Houses, (house) => house.location)
+    house: Houses;
 }

@@ -28,10 +28,10 @@ import { Categories } from './modules/categories/categories.entity';
     }),
     
     UsersModule,
-    HousesModule,
-    ProfilesModule,
     FeaturesModule,
     LocationsModule,
+    HousesModule,
+    ProfilesModule,
     PicturesModule,
     AuthModule,
     CategoriesModule

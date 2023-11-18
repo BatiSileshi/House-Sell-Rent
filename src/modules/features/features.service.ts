@@ -10,9 +10,7 @@ import { Houses } from '../houses/house.entity';
 export class FeaturesService {
     constructor(
         @InjectRepository(Features)
-        private repo: Repository<Features>,
-        @InjectRepository(Houses)
-        private houseRepo: Repository<Houses>,  
+        private repo: Repository<Features>, 
         private housesService: HousesService
     ){}
 

@@ -45,18 +45,11 @@ export class Houses {
     @ManyToOne(() => Profiles, (owner) => owner.houses)
     owner: Profiles;
 
-    // @OneToOne(() => Locations)
-    // @ApiProperty()
+
+    // @OneToOne(() => Locations, (location) => location.house, { cascade: true})
     // @JoinColumn()
     // location: Locations
-    @OneToOne(() => Locations, (location) => location.house, { cascade: true, nullable: true})
-    @JoinColumn()
-    location: Locations
 
-
-    @OneToOne(() => Features, (feature) => feature.house, { onDelete: 'SET NULL' , nullable:true})
-    @JoinColumn()
-    feature: Features;
 
     @CreateDateColumn()
     @ApiProperty()
@@ -65,6 +58,16 @@ export class Houses {
     @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
     @ApiProperty()
     updated_at: Date; 
+
+
+    @OneToOne(() => Features, (feature) => feature.house, { onDelete: 'SET NULL' , nullable:true})
+    @JoinColumn()
+    feature: Features;
+
+
+    @OneToOne(() => Locations, { onDelete: 'SET NULL', nullable: true })
+    @JoinColumn()
+    location: Locations;
 
     
     @ManyToOne(() => Categories, (category) => category.houses)
