@@ -9,10 +9,9 @@ import { Profiles } from './modules/profiles/profiles.entity';
 import { Houses } from './modules/houses/house.entity';
 import { ProfilesModule } from './modules/profiles/profiles.module';
 import { FeaturesModule } from './modules/features/features.module';
-import { LocationsModule } from './modules/locations/locations.module';
 import { PicturesModule } from './modules/pictures/pictures.module';
 import { Features } from './modules/features/features.entity';
-import { Locations } from './modules/locations/locations.entity';
+import { Locations } from './modules/features/locations.entity';
 import { Pictures } from './modules/pictures/pictures.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
@@ -29,7 +28,6 @@ import { Categories } from './modules/categories/categories.entity';
     
     UsersModule,
     FeaturesModule,
-    LocationsModule,
     HousesModule,
     ProfilesModule,
     PicturesModule,

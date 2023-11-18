@@ -3,11 +3,10 @@ import { Column, PrimaryGeneratedColumn, Entity, ManyToOne,
     OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Features } from "../features/features.entity";
-import { Locations } from "../locations/locations.entity";
+import { Locations } from "../features/locations.entity";
 import { Pictures } from "../pictures/pictures.entity";
 import { Profiles } from "../profiles/profiles.entity";
 import { Categories } from "../categories/categories.entity";
-import { LocationsModule } from "../locations/locations.module";
 
 
 @Entity()
@@ -46,9 +45,9 @@ export class Houses {
     owner: Profiles;
 
 
-    // @OneToOne(() => Locations, (location) => location.house, { cascade: true})
-    // @JoinColumn()
-    // location: Locations
+    @OneToOne(() => Locations, (location) => location.house, { cascade: true})
+    @JoinColumn()
+    location: Locations
 
 
     @CreateDateColumn()
@@ -65,9 +64,9 @@ export class Houses {
     feature: Features;
 
 
-    @OneToOne(() => Locations, { onDelete: 'SET NULL', nullable: true })
-    @JoinColumn()
-    location: Locations;
+    // @OneToOne(() => Locations, { onDelete: 'SET NULL', nullable: true })
+    // @JoinColumn()
+    // location: Locations;
 
     
     @ManyToOne(() => Categories, (category) => category.houses)

@@ -6,11 +6,11 @@ import { CreateHouseDto } from './dtos/create-house.dto';
 import { Profiles } from '../profiles/profiles.entity';
 import { CategoriesService } from '../categories/categories.service';
 import { Features } from '../features/features.entity';
-import { Locations } from '../locations/locations.entity';
+import { Locations } from '../features/locations.entity';
 
 @Injectable()
 export class HousesService {
-    constructor(
+    constructor(  
         @InjectRepository(Houses)
         private repo: Repository<Houses>, 
         private categoriesService: CategoriesService,
