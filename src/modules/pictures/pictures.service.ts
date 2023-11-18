@@ -24,7 +24,6 @@ export class PicturesService {
         picture.house = house;
 
         const createdPicture = await this.repo.save(picture);
-        console.log(createdPicture)
         return createdPicture;
     }
 

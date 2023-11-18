@@ -60,6 +60,19 @@ export class HousesController {
         return house;
     }
 
+    // get houses by category
+    @Get('/category/:id/get')
+    @ApiBearerAuth()
+    @ApiOperation({summary: "Getting houses of specific category"})
+    @Serialize(HouseDto)
+    async getCategoryHouses(@Param('id') id: string){
+        const houses = await this.housesService.findHousesByCategory(parseInt(id));
+        if(!houses || houses.length === 0){
+            throw new NotFoundException("This category has no house.")
+        }
+        return houses;
+    }
+
 
     // get other owners project
     @Get('/owners/:id/get')

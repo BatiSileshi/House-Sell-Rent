@@ -7,6 +7,7 @@ import { Profiles } from '../profiles/profiles.entity';
 import { CategoriesService } from '../categories/categories.service';
 import { Features } from '../features/features.entity';
 import { Locations } from '../features/locations.entity';
+import { Categories } from '../categories/categories.entity';
 
 @Injectable()
 export class HousesService {
@@ -85,6 +86,22 @@ export class HousesService {
             throw new NotFoundException('This user does not have houses.')
         }
         return houses;
+    }
+
+    //get houses by category
+    async findHousesByCategory(id: number){
+        const category = await this.categoriesService.findOne(id);
+        if(!category){
+            throw new NotFoundException("Non existing category.")
+        }
+        const options: FindManyOptions<Houses>={
+            where: {category: { id: id}},
+            relations: ['category', 'owner', 'feature', 'location'],
+        }
+
+        const foundHouses = await this.repo.find(options);
+
+        return foundHouses;
     }
 
 

@@ -4,6 +4,7 @@ import { Categories } from './categories.entity';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
+import { Houses } from '../houses/house.entity';
 
 @Injectable()
 export class CategoriesService {
@@ -39,6 +40,8 @@ export class CategoriesService {
         }
         return categories;
     }
+
+
 
     // update category
     async update(id: number, attrs: Partial<Categories>){
