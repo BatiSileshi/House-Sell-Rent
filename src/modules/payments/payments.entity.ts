@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";   
 import { ApiProperty } from "@nestjs/swagger";
 import { PaymentMethods } from "./methods.entity";
+import { Houses } from "../houses/house.entity";
 
 @Entity()
 export class Payments{
@@ -36,6 +37,10 @@ export class Payments{
     @ApiProperty()
     tx_ref: string;
 
+    @Column({default: "unpaid"})
+    @ApiProperty()
+    status: string;
+
     @CreateDateColumn()
     @ApiProperty()
     created_at: Date;
@@ -47,5 +52,9 @@ export class Payments{
     @ApiProperty()
     @ManyToOne(() => PaymentMethods, (payment_method) => payment_method.payments)
     payment_method: PaymentMethods
+
+    @ApiProperty()
+    @ManyToOne(() => Houses, (house) => house.payments)
+    house: Houses;
 
 }

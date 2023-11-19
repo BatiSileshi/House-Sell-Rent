@@ -7,6 +7,7 @@ import { Locations } from "../features/locations.entity";
 import { Pictures } from "../pictures/pictures.entity";
 import { Profiles } from "../profiles/profiles.entity";
 import { Categories } from "../categories/categories.entity";
+import { Payments } from "../payments/payments.entity";
 
 
 @Entity()
@@ -42,6 +43,10 @@ export class Houses {
     @OneToMany(() => Pictures, (picture) => picture.house)
     @ApiProperty()
     pictures: Pictures[]
+
+    @OneToMany(() => Payments, (payment) => payment.house)
+    @ApiProperty()
+    payments: Payments[]
  
     @ApiProperty()
     @ManyToOne(() => Profiles, (owner) => owner.houses)

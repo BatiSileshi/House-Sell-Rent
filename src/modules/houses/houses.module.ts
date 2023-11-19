@@ -12,14 +12,18 @@ import { FeaturesService } from '../features/features.service';
 import { Locations } from '../features/locations.entity';
 import { Pictures } from '../pictures/pictures.entity';
 import { PicturesService } from '../pictures/pictures.service';
+import { PaymentMethods } from '../payments/methods.entity';
+import { Payments } from '../payments/payments.entity';
+import { PaymentMethodsService } from '../payments/methods.service';
+import { PaymentsService } from '../payments/payments.service';
 
 @Module({ 
   imports: [
-    TypeOrmModule.forFeature([Houses, Locations, Features, Profiles, Categories, Pictures]),
+    TypeOrmModule.forFeature([Houses, Locations, Features, Profiles, Categories, Pictures, PaymentMethods, Payments]),
 
 ],
   controllers: [HousesController],
-  providers: [HousesService,  FeaturesService, ProfilesService, CategoriesService, PicturesService
+  providers: [HousesService,  FeaturesService, ProfilesService, CategoriesService, PicturesService, PaymentMethodsService, PaymentsService
   ],
 })
 export class HousesModule {}
