@@ -52,7 +52,7 @@ export class PaymentsService {
                 "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
                 "return_url": "https://www.google.com/",
                 "customization": {
-                  "title": "Pay fro HRS",
+                  "title": "Pay for HRS",
                   "description": "Now your house will be shown",
                 }
             };
