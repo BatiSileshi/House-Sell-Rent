@@ -3,6 +3,9 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import { LoginUserDto } from '../users/dtos/login-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Serialize } from 'src/interceptors/serializer.interceptor';
+import { UserDto } from '../users/dtos/user.dto';
+
 
 @ApiTags('auth')
 @Controller('auth')
@@ -12,6 +15,7 @@ export class AuthController {
         ){}
 
     @Post('/register')
+    @Serialize(UserDto)
     async registerUser(@Body() body: CreateUserDto){
         const user = await this.authService.signup(body.phone_number, body.password, body.confirm_password);
         return user;

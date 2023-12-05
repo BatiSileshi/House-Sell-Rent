@@ -17,7 +17,7 @@ export class AuthService {
         private jwtService: JwtService
         ){}
 
-    async signup(phone_number: string, password: string, confirm_password: string):Promise<Profiles>{
+    async signup(phone_number: string, password: string, confirm_password: string):Promise<Users>{
         const users = await this.usersService.find(phone_number);
         if(users.length){
             throw new BadRequestException('Phone number already exist.')
@@ -35,7 +35,7 @@ export class AuthService {
 
         const user = await this.usersService.create(phone_number, hashed_password)
 
-        return user.profile;
+        return user;
     
     }
 
