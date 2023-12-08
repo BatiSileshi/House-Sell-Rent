@@ -26,15 +26,21 @@ export class PaymentsService {
 
         const {payment_method, ...paymentData}= createPaymentDto;
         const selectedPaymentMethod = await this.paymentMethodServices.findOne(payment_method);
+        if (!selectedPaymentMethod){
+            throw new NotFoundException('Payment method not found.')
+        }
 
 
         const payment= this.repo.create({
             ...paymentData,
             payment_method: selectedPaymentMethod,
         });
+
         payment.house = house;
+
+        const savedPayment = await this.repo.save(payment);
+
         //sending request to chapa
-        // console.log("Created Payment:", payment)
         if(payment.payment_method.payment_method_identifier === "1"){
             const headers = {
                 'Authorization': 'Bearer CHASECK_TEST-kdLyaIRGQkug9UjBlIvBFjgoDnja2vIl',
@@ -49,7 +55,7 @@ export class PaymentsService {
                 "last_name": payment.last_name,
                 "phone_number": payment.phone_number,
                 "tx_ref": payment.tx_ref,
-                "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+                "callback_url": "http://127.0.0.1:3000/api/payments/webhook",
                 "return_url": "https://www.google.com/",
                 "customization": {
                   "title": "Pay for HRS",
@@ -59,19 +65,14 @@ export class PaymentsService {
             try {
                 const response = await axios.post("https://api.chapa.co/v1/transaction/initialize", data, { headers });
                 
-                console.log(response.data);
                 return response.data; 
               } catch (error) {
                 // console.error('Error:', error.response.data);
                 return (error.response.data);
               }
-    
-        }else{
-            console.log("Another payment method")
         }
-        
-        const savedPayment = await this.repo.save(payment);
-        return savedPayment;
+
+        return 'Another payment method - rather than chapa';
     }
 
 
@@ -103,7 +104,6 @@ export class PaymentsService {
     //verify payment from chapa and change status
     async updatePaymentStatus(id: number){
         const payment = await this.findOne(id);
-        console.log("The Payment: ", payment)
 
         if(payment.status === "unpaid"){
             const tx_ref = payment.tx_ref;
@@ -112,9 +112,9 @@ export class PaymentsService {
               };
 
             try {
-                const response = await axios.get(`https://api.chapa.co/v1/transaction/verify/${tx_ref}`,  { headers });
-                
-                console.log(response.status);
+                const url = `https://api.chapa.co/v1/transaction/verify/${tx_ref}`
+                const response = await axios.get(url,  { headers });
+
                 return {
                     status: response.status,
                     data: response.data,
@@ -126,10 +126,6 @@ export class PaymentsService {
                     data: error.response.data,
                   };
             }
-
-              
         }
-
     }
-
 }

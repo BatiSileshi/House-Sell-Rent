@@ -2,6 +2,8 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePaymentDto } from './dtos/create-payment.dto';
+import { Serialize } from 'src/interceptors/serializer.interceptor';
+import { PaymentDto } from './dtos/payment.dto';
 
 @ApiTags('payments')
 @Controller('payments')

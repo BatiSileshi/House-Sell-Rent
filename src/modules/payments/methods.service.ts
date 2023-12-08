@@ -16,7 +16,7 @@ export class PaymentMethodsService{
     create(createPaymentMethodDto: CreatePaymentMethodDto){
         const payment_method = this.repo.create(createPaymentMethodDto);
         return this.repo.save(payment_method);
-    }
+    }  
 
     //get single payment method
     async findOne(id: number){
