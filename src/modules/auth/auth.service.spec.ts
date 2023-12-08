@@ -3,15 +3,16 @@ import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { Users } from '../users/user.entity';
 
-
+// creating test suit (description)
 describe('AuthService', () =>{
 
   let service: AuthService
   let fakeUsersService: Partial<UsersService>
 
+  //setting up beforeEach hook to run before each test
   beforeEach(async () => {
-      // creating fake copy of auth service
-      const fakeUsersService: Partial<UsersService>= {
+      // creating fake copy of users service
+      fakeUsersService = {
         find: () => Promise.resolve([]),
         create: (phone_number: string, password: string) => 
         Promise.resolve({id: 1, phone_number, password} as Users),
@@ -28,6 +29,7 @@ describe('AuthService', () =>{
         ],
       }).compile();
     
+      // initializing the "AuthService" with fake UsersService
       service = module.get(AuthService);
   });
   
@@ -55,13 +57,24 @@ describe('AuthService', () =>{
 
   });
 
-  it('throws error if signin is called with an unused email', async(done)=>{
+  it('throws error if signin is called with an unused phone number', async(done)=>{
     try{
         await service.signin('09', 'pwd');
     }catch (err){
         done();
     }
-  })
+  });
+
+  it('throws if invalid password is provided', async(done)=>{
+    fakeUsersService.find = () => Promise.resolve([
+      {phone_number: '090909', password: 'pwd'} as Users,
+    ]);
+    try{
+      await service.signin('0909099090', 'password');
+    }catch(err){
+      done();
+    }
+  });
 
   
 });
