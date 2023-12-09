@@ -24,7 +24,7 @@ export class FeaturesService {
         const feature = this.repo.create(createFeatureDto);
 
         const featuredHouse = await this.housesService.updateFeature(id, feature);
-        const createdFeature = this.repo.save(feature);
+        const createdFeature = await this.repo.save(feature);
 
         return createdFeature;
 
@@ -88,6 +88,7 @@ export class FeaturesService {
         return createdLocation;
 
     }
+
 
     // get a specific location
     async findOne1(id: number){

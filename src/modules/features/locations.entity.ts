@@ -10,7 +10,7 @@ export class Locations {
 
     @Column()
     @ApiProperty()
-    city: string;
+    city: string; 
 
     @Column()
     @ApiProperty()

@@ -7,7 +7,6 @@ import { Profiles } from '../profiles/profiles.entity';
 import { CategoriesService } from '../categories/categories.service';
 import { Features } from '../features/features.entity';
 import { Locations } from '../features/locations.entity';
-import { Categories } from '../categories/categories.entity';
 
 @Injectable()
 export class HousesService {
@@ -113,19 +112,18 @@ export class HousesService {
         }
     
         house.feature = feature;
-
-        return this.repo.save(house);
+        return await this.repo.save(house);
       }
 
     
     async updateLocation(id: number, location: Locations): Promise<Houses>{
         const house = await this.findOne(id);
-    
+
         if (!house) {
           throw new NotFoundException('House not found.');
         }
     
         house.location = location;
-        return this.repo.save(house);
+        return await this.repo.save(house);
     }
 }

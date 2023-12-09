@@ -1,15 +1,17 @@
-import { Controller, Post, Body, Param, Get, NotFoundException, Patch, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, NotFoundException, Patch, Delete, UseGuards } from '@nestjs/common';
 import { ApiProperty, ApiOperation, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateFeatureDto } from './dtos/create-feature.dto';
 import { FeaturesService } from './features.service';
 import { UpdateFeatureDto } from './dtos/update-feature.dto';
 import { CreateLocationDto } from './dtos/create-location.dto';
 import { UpdateLocationDto } from './dtos/update-location.dto';
+import { AuthGuard } from 'src/guards/auth.guards';
+import { HouseGuard } from 'src/guards/house.guards';
 
 
 @ApiTags("features and locations")
 @Controller('')
-export class FeaturesController {
+export class FeaturesController { 
     constructor(
         private featuresService: FeaturesService, 
     ){}
@@ -17,7 +19,7 @@ export class FeaturesController {
     @Post('features/:id')
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Create feature for house'  , description: "Create feature for specific house with id: id"})
-    // @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard, HouseGuard)
     async createFeature(@Param('id') id: string, @Body() createFeatureDto: CreateFeatureDto){
         const createdFeature = await this.featuresService.create(parseInt(id), createFeatureDto);
 
@@ -83,6 +85,7 @@ export class FeaturesController {
 
         return createdLocation;
     }
+
 
     // get all locations
     @Get('locations')

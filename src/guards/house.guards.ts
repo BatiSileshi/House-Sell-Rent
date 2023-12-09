@@ -18,7 +18,7 @@ export class HouseGuard implements CanActivate{
 
         if(house && currentUser && house.owner.id === userProfile.id){
             return true;
-        }
+        } 
 
         return false;
     }

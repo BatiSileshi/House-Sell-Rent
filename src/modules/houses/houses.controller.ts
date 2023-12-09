@@ -31,7 +31,7 @@ export class HousesController {
     @Serialize(HouseDto)
     async createHouse(@Body() createHouseDto: CreateHouseDto, @CurrentUser() user: any){
         const currentUserProfile = await this.profilesService.findOneByUserId(user.sub);
-
+ 
         return this.housesService.create(createHouseDto, currentUserProfile);
     }
 
@@ -74,7 +74,7 @@ export class HousesController {
     }
 
 
-    // get other owners project
+    // get other owners house
     @Get('/owners/:id/get')
     @ApiBearerAuth()
     @ApiOperation({summary: "Getting user's houses by their id"})

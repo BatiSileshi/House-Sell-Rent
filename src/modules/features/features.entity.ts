@@ -51,11 +51,11 @@ export class Features{
     @OneToOne(() => Houses, (house)=> house.feature, {onDelete: 'SET NULL', nullable: true})
     house: Houses
 
-    @CreateDateColumn()
-    @ApiProperty()
-    created_at: Date;
+    // @CreateDateColumn()
+    // @ApiProperty()
+    // created_at: Date;
 
-    @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
-    @ApiProperty()
-    updated_at: Date; 
+    // @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP" })
+    // @ApiProperty()
+    // updated_at: Date; 
 }

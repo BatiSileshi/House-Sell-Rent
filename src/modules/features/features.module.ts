@@ -8,11 +8,13 @@ import { HousesService } from '../houses/houses.service';
 import { Categories } from '../categories/categories.entity';
 import { CategoriesService } from '../categories/categories.service';
 import { Locations } from './locations.entity';
+import { Profiles } from '../profiles/profiles.entity';
+import { ProfilesService } from '../profiles/profiles.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Features, Houses, Categories, Locations]),
+  imports: [TypeOrmModule.forFeature([Features, Houses, Categories, Locations, Profiles]),
 ],
-  providers: [FeaturesService,  HousesService, CategoriesService],
+  providers: [FeaturesService,  HousesService, CategoriesService, ProfilesService],
   controllers: [FeaturesController]
 })
 export class FeaturesModule {}
